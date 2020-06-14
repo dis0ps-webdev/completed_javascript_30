@@ -1,42 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Whack A Mole!</title>
-  <link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Whack A Mole!</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Whack-a-mole! <span class="score">0</span></h1>
+    <button onClick="startGame()">Start!</button>
 
-  <h1>Whack-a-mole! <span class="score">0</span></h1>
-  <button onClick="startGame()">Start!</button>
+    <div class="game">
+      <div class="hole hole1">
+        <div class="mole"></div>
+      </div>
+      <div class="hole hole2">
+        <div class="mole"></div>
+      </div>
+      <div class="hole hole3">
+        <div class="mole"></div>
+      </div>
+      <div class="hole hole4">
+        <div class="mole"></div>
+      </div>
+      <div class="hole hole5">
+        <div class="mole"></div>
+      </div>
+      <div class="hole hole6">
+        <div class="mole"></div>
+      </div>
+    </div>
 
-  <div class="game">
-    <div class="hole hole1">
-      <div class="mole"></div>
-    </div>
-    <div class="hole hole2">
-      <div class="mole"></div>
-    </div>
-    <div class="hole hole3">
-      <div class="mole"></div>
-    </div>
-    <div class="hole hole4">
-      <div class="mole"></div>
-    </div>
-    <div class="hole hole5">
-      <div class="mole"></div>
-    </div>
-    <div class="hole hole6">
-      <div class="mole"></div>
-    </div>
-  </div>
+    <script>
+      const holes = document.querySelectorAll(".hole");
+      const scoreBoard = document.querySelector(".score");
+      const moles = document.querySelectorAll(".mole");
+      let score = -1;
+      let totalMoles = 20;
+      let minDelay = 400;
+      let maxDelay = 800;
+      isMoleUp = false;
 
-<script>
-  const holes = document.querySelectorAll('.hole');
-  const scoreBoard = document.querySelector('.score');
-  const moles = document.querySelectorAll('.mole');
+      const sleep = (milliseconds) => {
+        return new Promise((resolve) => setTimeout(resolve, milliseconds));
+      };
 
-</script>
-</body>
+      function updateScore() {
+        score += 1;
+        scoreBoard.textContent = score;
+      }
+
+      async function startGame() {
+        score = -1;
+        updateScore();
+        numMoles = 0;
+
+        while (numMoles < totalMoles) {
+          if (!isMoleUp) {
+            popMole();
+            numMoles += 1;
+          }
+          await sleep(1000);
+        }
+      }
+
+      function popMole() {
+        randomHole = Math.floor(Math.random() * 6 + 1);
+        waitTime = Math.floor(Math.random() * maxDelay + minDelay);
+
+        selectedHole = document.querySelector(`.hole${randomHole}`);
+        selectedHole.classList.add("up");
+        isMoleUp = true;
+
+        setTimeout(() => {
+          selectedHole.classList.remove("up");
+          isMoleUp = false;
+        }, waitTime);
+      }
+
+      function whackMole(e) {
+        if (e.isTrusted) {
+          updateScore();
+        }
+      }
+
+      moles.forEach((mole) => {
+        mole.addEventListener("click", whackMole);
+      });
+    </script>
+  </body>
 </html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Console Tricks!</title>
+  </head>
+  <body>
+    <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+    <script>
+      const dogs = [
+        { name: "Snickers", age: 2 },
+        { name: "hugo", age: 8 },
+      ];
+
+      function makeGreen() {
+        const p = document.querySelector("p");
+        p.style.color = "#BADA55";
+        p.style.fontSize = "50px";
+      }
+
+      // Regular
+      console.log("regular message");
+
+      // Interpolated
+      console.log(`page title: ${document.title}`);
+
+      // Styled
+      console.log("%c, this is stylized", "font-size:16px; color:red;");
+
+      // warning!
+      console.warn("warning!");
+
+      // Error :|
+      console.error("error!");
+
+      // Info
+      console.info("informational!");
+
+      // Testing
+      console.assert(1 === 2, "fires only when false!");
+
+      // clearing
+      // console.clear();
+
+      // Viewing DOM Elements
+      const targetElement = document.querySelector("p");
+      console.log(targetElement);
+
+      // Grouping together
+      dogs.forEach((dog) => {
+        console.groupCollapsed(`${dog.name}`);
+        console.log(`age: ${dog.age}`);
+        console.log("All console logs grouped between group() functions");
+        console.groupEnd(`${dog.name}`);
+      });
+
+      // counting
+      console.count("Accumulator");
+      console.count("Accumulator");
+      console.count("Accumulator");
+      console.count("Accumulator");
+      console.count("Accumulator");
+
+      // timing
+      console.time("time function");
+
+      console.timeEnd("time function");
+
+      // table
+      console.table(dogs);
+    </script>
+  </body>
+</html>
